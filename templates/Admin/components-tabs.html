@@ -1,0 +1,221 @@
+{% extends '/Admin/base.html' %} {% block main %} <main id="main" class="main">
+  <div class="pagetitle">
+    <h1>Tabs</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="index.html">Home</a>
+        </li>
+        <li class="breadcrumb-item">Components</li>
+        <li class="breadcrumb-item active">Tabs</li>
+      </ol>
+    </nav>
+  </div>
+  <!-- End Page Title -->
+  <section class="section">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Bordered Tabs Justified</h5>
+            <!-- Bordered Tabs Justified -->
+            <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+              <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-home" type="button" role="tab" aria-controls="home" aria-selected="true">Register Non Consumable Items</button>
+              </li>
+              <li class="nav-item flex-fill" role="presentation">
+                <button class="nav-link w-100" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Register Consumable Items</button>
+              </li>
+            </ul>
+            <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+              <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
+                <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+                  <div class="tab-pane fade show active" id="bordered-justified-home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="pagetitle">
+                      <h1>Modal</h1>
+                      <nav>
+                        <ol class="breadcrumb">
+                          <li class="breadcrumb-item">
+                            <a href="index.html">Home</a>
+                          </li>
+                          <li class="breadcrumb-item">Components</li>
+                          <li class="breadcrumb-item active">Modal</li>
+                        </ol>
+                      </nav>
+                    </div>
+                    <!-- End Page Title -->
+                    <div class="col-lg-10">
+                      <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Register Item</h5>
+                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered"> register Item </button>
+                          <div class="modal fade" id="verticalycentered" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title">Register Item</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <form action="{{ url_for('register_item') }}" method="post">
+                                    <div class="row mb-3">
+                                      <label for="inputname" class="col-sm-3 col-form-label">Item Name</label>
+                                      <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="item_name" placeholder="Enter item name">
+                                      </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                      <label for="inputcode" class="col-sm-3 col-form-label">Item Code</label>
+                                      <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="codification" placeholder="Enter item codification">
+                                      </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                      <label for="inputserial" class="col-sm-3 col-form-label">Serial</label>
+                                      <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="serial" placeholder="Enter item serial">
+                                      </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                      <label class="col-sm-3 col-form-label">category</label>
+                                      <div class="col-sm-9">
+                                        <select class="form-select" name="category" aria-label="Default select example">
+                                          <option selected>select category</option>
+                                          <option value="consumables">consumables</option>
+                                          <option value="non-consumables">non-consumables</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                      <label class="col-sm-3 col-form-label">status</label>
+                                      <div class="col-sm-9">
+                                        <select class="form-select" name="status" aria-label="Default select example">
+                                          <option selected value="functioning well">Good</option>
+                                          <option value="work but has some defects">Fair</option>
+                                          <option value="not in services but can be maintaned">to be repaired</option>
+                                          <option value="beyond repair and needs disposal">damaged</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                      <label class="col-sm-3 col-form-label">Location</label>
+                                      <div class="col-sm-9">
+                                        <select class="form-select" name="location" aria-label="Default select example">
+                                          <option selected value="Lab1">Lab 1</option>
+                                          <option value="Lab2">Lab 2</option>
+                                          <option value="Lab3">Lab 3</option>
+                                          <option value="Lab4">Lab 4</option>
+                                          <option value="Lab5">Lab 5</option>
+                                          <option value="Lab6">Lab 6</option>
+                                          <option value="Lab7">Lab 7</option>
+                                          <option value="netlab">Network Lab</option>
+                                          <option value="Stock">Stock</option>
+                                          <option value="server_room_1">server room 1</option>
+                                          <option value="server_room_2">server room 2</option>
+                                          <option value="admin">Admin</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <button type="submit" class="btn btn-primary">register Item</button>
+                                </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+<div class="tab-pane fade mx-5" id="bordered-justified-profile" role="tabpanel" aria-labelledby="profile-tab">
+  <div class="row">
+    <div class="col-lg-4"></div>
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Register Consumable Item</h5>
+          <form action="{{ url_for('register_consumable_item') }}" method="post">
+            <div class="row mb-3">
+              <label for="inputname" class="col-sm-3 col-form-label">Item Name</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="item_name" placeholder="Enter item name">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="inputcode" class="col-sm-3 col-form-label">quantity</label>
+              <div class="col-sm-9">
+                <input type="text" class="form-control" name="Quantity" placeholder="Enter item quantity">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-3 col-form-label">category</label>
+              <div class="col-sm-9">
+                <select class="form-select" name="category" aria-label="Default select example">
+                  <option selected>select category</option>
+                  <option value="consumables">consumables</option>
+                  <option value="non-consumables">non-consumables</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label class="col-sm-3 col-form-label">Location</label>
+              <div class="col-sm-9">
+                <select class="form-select" name="location" aria-label="Default select example">
+                  <option selected value="Lab1">Lab 1</option>
+                  <option value="Lab2">Lab 2</option>
+                  <option value="Lab3">Lab 3</option>
+                  <option value="Lab4">Lab 4</option>
+                  <option value="Lab5">Lab 5</option>
+                  <option value="Lab6">Lab 6</option>
+                  <option value="Lab7">Lab 7</option>
+                  <option value="netlab">Network Lab</option>
+                  <option value="Stock">Stock</option>
+                  <option value="server_room_1">server room 1</option>
+                  <option value="server_room_2">server room 2</option>
+                  <option value="admin">Admin</option>
+                </select>
+              </div>
+            </div>
+        </div>
+        <div>
+          <button type="submit" class="btn btn-primary my-3 mx-5 col-md-6">register Item</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- End #main --> {% endblock %}
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer">
+  <div class="copyright"> &copy; Copyright <strong>
+      <span>Tumba IMS</span>
+    </strong>. All Rights Reserved </div>
+</footer>
+<!-- End Footer -->
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+  <i class="bi bi-arrow-up-short"></i>
+</a>
+<!-- Vendor JS Files -->
+<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="assets/js/main.js"></script>undefined</body>undefined</html>

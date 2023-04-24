@@ -1,0 +1,115 @@
+{% extends '/header_for_users.html' %}
+{% block main %}
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Modal</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Components</li>
+          <li class="breadcrumb-item active">Modal</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+        <div class="col-lg-10">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Register Item</h5>
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
+                register Item
+              </button>
+              <div class="modal fade" id="verticalycentered" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Register Item</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form action="{{ url_for('register_item') }}" method="post">
+                        <div class="row mb-3">
+                          <label for="inputname" class="col-sm-3 col-form-label">Item Name</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="item_name" placeholder="Enter item name">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="inputcode" class="col-sm-3 col-form-label">Item Code</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="codification" placeholder="Enter item codification">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="inputserial" class="col-sm-3 col-form-label">Serial</label>
+                          <div class="col-sm-9">
+                            <input type="text" class="form-control" name="serial" placeholder="Enter item serial">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label for="inputquantity" class="col-sm-3 col-form-label">Quantity</label>
+                          <div class="col-sm-9">
+                            <input type="number" class="form-control" name="Quantity" placeholder="Enter quantity">
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label class="col-sm-3 col-form-label">category</label>
+                          <div class="col-sm-9">
+                            <select class="form-select" name="category" aria-label="Default select example">
+                              <option selected>select category</option>
+                              <option value="consumables">consumables</option>
+                              <option value="non-consumables">non-consumables</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label class="col-sm-3 col-form-label">status</label>
+                          <div class="col-sm-9">
+                            <select class="form-select" name="status" aria-label="Default select example">
+                              <option selected>select status</option>
+                              <option value="work well">work well</option>
+                              <option value="not functioning">not working</option>
+                            </select>
+                          </div>
+                        </div>
+                          <div class="row mb-3">
+                            <label for="inputlocation" class="col-sm-3 col-form-label">location</label>
+                            <div class="col-sm-9">
+                              <input type="text" class="form-control" name="location" placeholder="Enter destination">
+                            </div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">register Item</button>
+                        </div>
+                      </form>
+                  </div>
+                </div>
+              </div><!-- End Vertically centered Modal-->
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main><!-- End #main -->
+{% endblock %}
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Tumba IMS</span></strong>. All Rights Reserved
+    </div>
+  </footer><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <!-- Vendor JS Files -->
+  <script src="/static/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="/static/assets/js/main.js"></script>
+
+</body>
+
+</html>

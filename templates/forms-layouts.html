@@ -1,0 +1,69 @@
+{% extends '/header_for_users.html' %}
+{% block main %}
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Form Layouts</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ url_for('hello') }}">Home</a></li>
+          <li class="breadcrumb-item active">request Items</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">        
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">request Item</h5>
+              <!-- No Labels Form -->
+              <form class="row g-3" action="{{ url_for('request_item') }}" method="post">
+                <div class="col-md-12">
+                  <input type="text" disabled name="first_name" class="form-control" value="{{first_name}}">
+                </div>
+                <div class="col-md-12">
+                  <input type="text" hidden name="id" class="form-control" value="{{ id }}">
+                </div>
+                <div class="col-md-12">
+                  <input type="text" disabled name="last_name" class="form-control" value="{{last_name}}">
+                </div>
+                <div class="col-md-6">
+                  <input type="email" disabled name="email" class="form-control" value="{{email}}">
+                </div>
+                <div class="col-md-6">
+                  <input type="number" name="phone" class="form-control" placeholder="Enter Phone number">
+                </div>
+                <div class="col-md-6">
+                  <input type="text" name="item" class="form-control" placeholder="Enter item">
+                </div>
+                <div class="col-md-6">
+                  <input type="number" name="Quantity" class="form-control" placeholder="Enter Quantity">
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+  {% endblock %}
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Tumba IMS</span></strong>. All Rights Reserved
+    </div>
+  </footer><!-- End Footer -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
