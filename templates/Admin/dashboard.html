@@ -16,15 +16,18 @@
       <div class="row">
             {% for user_info in user_data %}
             <div class="card">
-              <div class="card-header">
-               <h1 class="fw-b">here are your information</h1> 
+              <div class="row">
+                <h1 class="fw-b">Personal information</h1> 
+              <div class="card-header col-sm-6">               
+               <img src="{{ url_for('static', filename='uploads/'+user_info.profile_img) }}" alt="Profile" class="rounded-circle w-50">
               </div>
-              <div class="card-body">
+              <div class="card-body col-sm-6">
                 <h4 class="card-title">First Name: {{ user_info.first_name }}</h4>
                 <p class="card-text">Last Name: {{ user_info.last_name }}</p>
                 <p class="card-text">Email: {{ user_info.email }}</p>
                 <p class="card-text">Job position: {{ user_info.job_position }}</p>
               </div>
+            </div>
             </div>
              {% endfor %}
         </div>

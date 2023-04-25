@@ -16,19 +16,19 @@
                 <div class="row mb-3">
                   <label for="inputname" class="col-sm-3 col-form-label">Item Name</label>
                   <div class="col-sm-9">
-                    <input type="text" value="{{ item.item_name }}" class="form-control" name="item_name">
+                    <input type="text" value="{{ item.item_name }}" required class="form-control" name="item_name">
                   </div>
                 </div>
                 <div class="row mb-3">
                     <label for="inputname" class="col-sm-3 col-form-label">Item quantity</label>
                     <div class="col-sm-9">
-                      <input type="text" value="{{ item.item_quantity }}" class="form-control" name="item_quantity">
+                      <input type="text" value="{{ item.item_quantity }}" required class="form-control" name="item_quantity">
                     </div>
                   </div>
                 <div class="row mb-3">
                   <label class="col-sm-3 col-form-label">category</label>
                   <div class="col-sm-9">
-                    <select class="form-select" value="{{ item.item_category }}" name="category">
+                    <select class="form-select" value="{{ item.item_category }}" required name="category">
                       <option selected value="{{ item.item_category }}">{{ item.item_category }}</option>
                       <option value="consumables">consumables</option>
                       <option value="non-consumables">non-consumables</option>
@@ -38,8 +38,8 @@
                 <div class="row mb-3">
                   <label class="col-sm-3 col-form-label">Location</label>
                   <div class="col-sm-9">
-                    <select class="form-select"  name="location" aria-label="Default select example">
-                      <option selected value="{{ item.item_location }}">{{ item.item_location }}</option>
+                    <select class="form-select"  name="location" required aria-label="Default select example">
+                      <option selected value="{{ item.item_location }}" >{{ item.item_location }}</option>
                       <option value="Lab1">Lab 1</option>
                       <option value="Lab2">Lab 2</option>
                       <option value="Lab3">Lab 3</option>

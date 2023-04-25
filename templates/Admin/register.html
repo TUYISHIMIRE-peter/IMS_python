@@ -15,12 +15,12 @@
                     <p class="text-center small">Enter your personal details to create account</p>
                   </div>
 
-                  <form class="row g-3 needs-validation" action="{{url_for('register_user')}}" method="post" novalidate>
+                  <form class="row g-3 needs-validation" action="{{url_for('register_user')}}" method="post" validate>
                     <div class="col-12">
                       <label for="yourName" class="form-label">first Name</label>
                       <div class="input-group has-validation">
                       <span class="input-group-text" id="inputGroupPrepend">@</span>
-                      <input type="text" name="name" class="form-control" id="yourName" required>
+                      <input type="text" name="name" pattern="[^0-9]+" minlength="5" class="form-control" id="yourName" required>
                       <div class="invalid-feedback">Please, enter your name!</div>
                       </div>
                     </div>
@@ -28,8 +28,7 @@
                       <label for="yourUsername" class="form-label">Last name</label>
                       <div class="input-group has-validation">
                         <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" id="yourUsername" required>
-                        <div class="invalid-feedback">Please choose a username.</div>
+                        <input type="text" pattern="[^0-9]+" minlength="5" name="username" class="form-control" id="yourUsername" required>
                       </div>
                     </div>
 
@@ -42,7 +41,7 @@
 
                     <div class="col-12">
                       <label for="yourPassword" class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control" id="yourPassword" required>
+                      <input type="password" minlength="8" name="password" class="form-control" id="yourPassword" required>
                       <div class="invalid-feedback">Please enter your password!</div>
                     </div>
                     <div class="col-12">
