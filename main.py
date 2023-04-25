@@ -1,14 +1,16 @@
 from datetime import timedelta
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL
-import MySQLdb.cursors
+import MySQLdb.cursors,os
 from werkzeug.security import generate_password_hash,check_password_hash
+
+UPLOAD_FOLDER = 'static/uploads/'
 
 app = Flask(__name__)
 
 app.secret_key = 'shardaq'
 app.config['PERMANENT_SESSION_LIFETIME']= timedelta(minutes=10)
-
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # database connection details below
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -54,6 +56,15 @@ def logout():
 @app.route('/profile')
 def profile():
     return render_template('/Admin/users-profile.html')
+
+
+#------------------------------------------------------------------------------------
+@app.route('/delete/<string:id_data>', methods = ['GET'])
+def delete(id_data):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM `items` WHERE `item_id`=%s", (id_data,))
+    mysql.connection.commit()
+    return redirect(url_for('home'))
 #------------------------------------------------------------------------------------
 @app.route('/Home')
 def home():
@@ -61,14 +72,11 @@ def home():
         return render_template('index.html',error='you must login first')
     else:
         if session['position']=='Admin':
+            name=session['username']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            cursor.execute("""SELECT request.id,request.status,request.user_id,request.phone,
-            request.item_name,request.item_quantity,users.first_name,
-            users.last_name, users.email FROM request  
-            INNER JOIN users ON request.user_id = users.id  
-            ORDER BY id""")
+            cursor.execute("""SELECT * FROM `users` WHERE `last_name`= %s""",(name,))
             row = cursor.fetchall()
-            return render_template('/Admin/dashboard.html',requests=row,username=session['username'], user=session['user']) 
+            return render_template('/Admin/dashboard.html',user_data=row,username=session['username'], user=session['user']) 
         else:
             return render_template('/dashboard.html', username=session['username'], user=session['user']) 
 #------------------------------------------------------------------------------------
@@ -124,7 +132,6 @@ def modal():
 @app.route('/register_item', methods=['POST'])
 def register_item():  
     if request.method == "POST":
-        flash('data inserted successfully')
         name = request.form['item_name']
         codification = request.form['codification']
         serial = request.form['serial']
@@ -253,23 +260,183 @@ def register_add_comment():
         VALUES (%s,%s)""",(user_id,content))  
         mysql.connection.commit()      
         return redirect(url_for('home'))
-#---------------------------------------------------------------------------------
 
-@app.route('/changestatus/<id>/<status>')
-def change_status(id, status):
-    id = int(id)
-    cursor = mysql.connection.cursor()
-    cursor.execute("""UPDATE `request` SET `status`=%s WHERE `id`=%s""", (status, id))  
+
+#----------------------------------------------------------------------------------
+@app.route('/update/<string:id_data>', methods=['GET'])
+def update(id_data):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM `items` WHERE item_id=%s', (id_data,))
+    account = cursor.fetchall()
+    return render_template('/Admin/update_item.html',data=account, id=id_data,username=session['username'], user=session['user'])
+#------------------------------------------------------------------------------------
+@app.route('/update_item',methods=['POST','GET'])
+def update_item():
+
+    if request.method == 'POST':
+        id_data = request.form['item_id']
+        name = request.form['item_name']
+        quantity = request.form['item_quantity']
+        category = request.form['category']
+        location = request.form['location']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("""
+               UPDATE `items` SET 
+               `item_name`=%s,
+               `item_quantity`=%s,
+               `item_category`=%s,
+               `item_location`=%s
+               WHERE `item_id`=%s
+            """, (name, quantity, category, location,id_data))
+        mysql.connection.commit()
+        return redirect(url_for('home'))
+    
+#------------------------------------------------------------------------------------
+@app.route('/update_non_consumable/<string:id_data>', methods=['GET'])
+def update_non_consumable(id_data):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM `items` WHERE item_id=%s', (id_data,))
+    account = cursor.fetchall()
+    return render_template('/Admin/update_item_non_consumable.html',data=account, id=id_data,username=session['username'], user=session['user'])
+
+#----------------------------------------------------------------------------------
+
+@app.route('/update_non_consumable_item',methods=['POST','GET'])
+def update_item_non_consumable():
+
+    if request.method == 'POST':
+        id_data = request.form['item_id']
+        name = request.form['item_name']
+        item_code = request.form['item_code']
+        item_serial_number = request.form['item_serial_number']
+        status = request.form['status']
+        category = request.form['category']
+        location = request.form['location']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("""
+               UPDATE `items` SET 
+               `item_name`=%s,
+               `item_code`=%s,
+               `item_serial_number`=%s,
+               `item_category`=%s,
+               `item_status`=%s,
+               `item_location`=%s
+               WHERE `item_id`=%s
+            """, (name, item_code,item_serial_number,category,status, location,id_data))
+        mysql.connection.commit()
+        return redirect(url_for('home'))
+#----------------------------------------------------------------------------------
+@app.route('/delete_user/<string:id_data>', methods = ['GET'])
+def delete_user(id_data):
+    cur = mysql.connection.cursor()
+    cur.execute("DELETE FROM `users` WHERE `id`=%s", (id_data,))
     mysql.connection.commit()
-    # cursor.execute("""SELECT request.user_id,users.email   
-    #                 FROM request
-    #                 INNER JOIN users  
-    #                 ON request.user_id = users.id
-    #                 WHERE request.id=%s""", (id)) 
-    # user = cursor.fetchone()
-    # users= user['email']
-    # message = ("hello %s, your request has been %s. Thanks!" % (users, status))
     return redirect(url_for('home'))
 
+
+#----------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------
+@app.route('/update_user/<string:id_data>', methods=['GET'])
+def update_user(id_data):
+    cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    cursor.execute('SELECT * FROM `users` WHERE id=%s', (id_data,))
+    account = cursor.fetchall()
+    return render_template('/Admin/update_user_info.html',data=account, id=id_data,username=session['username'], user=session['user'])
+
+#----------------------------------------------------------------------------------
+
+@app.route('/update_user_info',methods=['POST','GET'])
+def update_user_info():
+
+    if request.method == 'POST':
+        id=request.form['id']
+        fname = request.form['name']
+        lname = request.form['username']
+        email = request.form['email']
+        password1 = request.form['password']
+        password = generate_password_hash(password1)
+        job_position = request.form['job_position']
+        file = request.files['image']
+        filename = file.filename
+        file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("""
+               UPDATE `users` SET 
+               `first_name`=%s,
+               `last_name`=%s,
+               `email`=%s,
+               `password`=%s,
+               `job_position`=%s,
+               `profile_img`=%s
+               WHERE `id`=%s
+            """, (fname,lname,email,password,job_position,filename,id))
+        mysql.connection.commit()
+        return redirect(url_for('home'))
+#---------------------------------------------------------------------------------
+
+@app.route('/update_request_status_to_approved/<id>')
+def change_status_approved(id):
+    cursor = mysql.connection.cursor()
+    cursor.execute("""UPDATE `request` SET `status`='approved' WHERE `id`=%s""", (id))  
+    mysql.connection.commit()
+    return redirect(url_for('home'))
+
+#---------------------------------------------------------------------------------
+
+@app.route('/update_request_to_rejected/<id>')
+def update_request_to_rejected(id):
+    cursor = mysql.connection.cursor()
+    cursor.execute("""UPDATE `request` SET `status`='rejected' WHERE `id`=%s""", (id))  
+    mysql.connection.commit()
+    return redirect(url_for('home'))
+#------------------------------------------------------------------------------------
+@app.route('/pending')
+def pending():
+    if len(session)==0:
+        return render_template('index.html',error='you must login first')
+    else:
+        if session['position']=='Admin':
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute("""SELECT request.id,request.status,request.user_id,request.phone,
+            request.item_name,request.item_quantity,users.first_name,
+            users.last_name, users.email FROM request  
+            INNER JOIN users ON request.user_id = users.id  
+            WHERE `status`='Pending'""")
+            row = cursor.fetchall()
+            return render_template('/Admin/pending.html',requests=row,username=session['username'], user=session['user']) 
+#------------------------------------------------------------------------------------
+@app.route('/approved')
+def approved():
+    if len(session)==0:
+        return render_template('index.html',error='you must login first')
+    else:
+        if session['position']=='Admin':
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute("""SELECT request.id,request.status,request.user_id,request.phone,
+            request.item_name,request.item_quantity,users.first_name,
+            users.last_name, users.email FROM request  
+            INNER JOIN users ON request.user_id = users.id  
+            WHERE `status`='approve'""")
+            row = cursor.fetchall()
+            return render_template('/Admin/approved.html',requests=row,username=session['username'], user=session['user']) 
+#------------------------------------------------------------------------------------
+@app.route('/rejected')
+def rejected():
+    if len(session)==0:
+        return render_template('index.html',error='you must login first')
+    else:
+        if session['position']=='Admin':
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute("""SELECT request.id,request.status,request.user_id,request.phone,
+            request.item_name,request.item_quantity,users.first_name,
+            users.last_name, users.email FROM request  
+            INNER JOIN users ON request.user_id = users.id  
+            WHERE `status`='rejecte'""")
+            row = cursor.fetchall()
+            name=row['request.item_name']
+            message='hello,%s your request have been rejected',(name)
+            return render_template('/Admin/rejected.html',requests=row,username=session['username'], user=session['user']) 
+            return render_template('/Admin/rejected.html',requests=row,username=session['username'], user=session['user'])
+#----------------------------------------------------------------------------------
 if __name__ == '__main__':
     app.run(debug=True)

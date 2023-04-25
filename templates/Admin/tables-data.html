@@ -27,12 +27,11 @@
                    <th>Name</th>
                     <th>Code</th>
                    <th>Serial Number</th>
-                    <th>Quantity</th>
                     <th>Category</th>
                    <th>Status</th>
                    <th>Location</th>
                    <th>Date Registered</th>
-                   <th>{{name}}</th>
+                   <th colspan="2" class="text-center">Action</th>
                  </tr>
                </thead>
                 <tbody>
@@ -42,11 +41,13 @@
                     <td>{{ item.item_name }}</td>
                     <td>{{ item.item_code }}</td>
                     <td>{{ item.item_serial_number }}</td>
-                   <td>{{ item.item_quantity }}</td>
                     <td>{{ item.item_category }}</td>
                     <td>{{ item.item_status }}</td>
                     <td>{{ item.item_location }}</td>
                   <td>{{ item.date_registered }}</td>
+                  <td><a href="/update_non_consumable/{{ item.item_id }}" class="btn btn-warning btn-xs">Edit</a></td>
+                  <td><a href="/delete/{{ item.item_id }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a></td>
+                
                  </tr>
                   {% endfor %}
                 </tbody>

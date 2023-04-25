@@ -1,0 +1,65 @@
+{% extends '/Admin/base.html' %}
+{% block main %}
+    {% for item in data %}
+    <div class="row my-5">
+        <div class="col-lg-4 "></div>
+        <div class="col-lg-6 my-5">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Update Consumable Item</h5>
+            <form action="{{ url_for('update_item') }}" method="POST">
+                <div class="row mb-3">
+                    <div class="col-sm-9">
+                      <input type="text" hidden value="{{ item.item_id }}" class="form-control" name="item_id">
+                    </div>
+                  </div>
+                <div class="row mb-3">
+                  <label for="inputname" class="col-sm-3 col-form-label">Item Name</label>
+                  <div class="col-sm-9">
+                    <input type="text" value="{{ item.item_name }}" class="form-control" name="item_name">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputname" class="col-sm-3 col-form-label">Item quantity</label>
+                    <div class="col-sm-9">
+                      <input type="text" value="{{ item.item_quantity }}" class="form-control" name="item_quantity">
+                    </div>
+                  </div>
+                <div class="row mb-3">
+                  <label class="col-sm-3 col-form-label">category</label>
+                  <div class="col-sm-9">
+                    <select class="form-select" value="{{ item.item_category }}" name="category">
+                      <option selected value="{{ item.item_category }}">{{ item.item_category }}</option>
+                      <option value="consumables">consumables</option>
+                      <option value="non-consumables">non-consumables</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label class="col-sm-3 col-form-label">Location</label>
+                  <div class="col-sm-9">
+                    <select class="form-select"  name="location" aria-label="Default select example">
+                      <option selected value="{{ item.item_location }}">{{ item.item_location }}</option>
+                      <option value="Lab1">Lab 1</option>
+                      <option value="Lab2">Lab 2</option>
+                      <option value="Lab3">Lab 3</option>
+                      <option value="Lab4">Lab 4</option>
+                      <option value="Lab5">Lab 5</option>
+                      <option value="Lab6">Lab 6</option>
+                      <option value="Lab7">Lab 7</option>
+                      <option value="netlab">Network Lab</option>
+                      <option value="Stock">Stock</option>
+                      <option value="server_room_1">server room 1</option>
+                      <option value="server_room_2">server room 2</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                  </div>
+                </div>
+               <button type="submit" class="btn btn-primary">Update Item</button> 
+            </div>
+          </div>
+        </div>
+    </div>
+  {% endfor %}
+{% endblock %}
+          

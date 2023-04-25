@@ -1,0 +1,87 @@
+{% extends '/Admin/base.html' %}
+{% block main %}
+  <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ Home }}">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-12">
+          <div class="row">
+                <div class="card-body">
+                  <h5 class="card-title">Pending Request</h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First name</th>
+                        <th scope="col">Last name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone Number</th>
+                        <th scope="col">Items</th>
+                        <th scope="col">quantity</th>
+                        <th scope="col" colspan="2" class="text-center">Action</th>
+                      </tr>
+                    </thead>
+                    {% for request in requests %}
+                    <tbody>                      
+                      <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ request.first_name }}</td>
+                        <td><a href="#" class="text-primary">{{ request.last_name }}</a></td>
+                        <td>{{ request.email}}</td>
+                        <td>{{ request.phone }}</td>
+                        <td>{{ request.item_name }}</td>
+                        <td>{{ request.item_quantity }}</td>
+                        <td><a href="/update_request_status_to_approved/{{ request.id }}"><span class="badge bg-success">Approved</span></a></td>
+                        <td><a href="/update_request_to_rejected/{{ request.id }}"><span class="badge bg-danger">Rejected</span></a></td>
+                      </tr>
+                    </tbody>
+                    {% endfor %}
+                  </table>
+                </div>
+              </div>
+            </div><!-- End Recent Sales -->
+           
+        </div><!-- End Left side columns -->
+      </div>
+    </section>
+
+  </main>
+  {% endblock %}
+  <!-- End #main -->
+  <!-- ======= Footer ======= -->
+  <footer id="footer" class="footer">
+    <div class="copyright">
+      &copy; Copyright <strong><span>Tumba IMS</span></strong>. All Rights Reserved
+    </div>    
+  </footer>
+
+
+
+  <!-- End Footer -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a> 
+   <!-- Vendor JS Files -->
+  <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="/static/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="/static/ssets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="/static/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="/static/assets/vendor/quill/quill.min.js"></script>
+  <script src="/static/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="/static/assets/js/main.js"></script>
+ 
+</body>
+</html>

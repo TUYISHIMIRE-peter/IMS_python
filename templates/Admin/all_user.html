@@ -28,6 +28,7 @@
                     <th>Last Name</th>
                    <th>Email</th>
                     <th>Job Position</th>
+                    <th colspan="2" class="text-center">Action</th>
                  </tr>
                </thead>
                 <tbody>
@@ -38,6 +39,9 @@
                     <td>{{ item.last_name }}</td>
                     <td>{{ item.email }}</td>
                    <td>{{ item.job_position }}</td>
+                   <td><a href="/update_user/{{ item.id }}" class="btn btn-warning btn-xs">Edit</a></td>
+                  <td><a href="/delete_user/{{ item.id }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure For Delete?')">Delete</a></td>
+                
                  </tr>
                   {% endfor %}
                 </tbody>

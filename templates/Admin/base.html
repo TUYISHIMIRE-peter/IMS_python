@@ -193,6 +193,41 @@
           </ul>
         </li>
         <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            data-bs-target="#forms-nav"
+            data-bs-toggle="collapse"
+            href="#"
+          >
+            <i class="bi bi-journal-text"></i><span>Manage requests</span
+            ><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul
+            id="forms-nav"
+            class="nav-content collapse"
+            data-bs-parent="#sidebar-nav"
+          >
+          <li>
+            <a class="nav-link collapsed" href="{{ url_for('pending') }}">
+              <i class="bi bi-card-list"></i>
+              <span>view pending request</span>
+            </a>
+          </li>
+            <li>
+              <a class="nav-link collapsed" href="{{ url_for('approved') }}">
+                <i class="bi bi-card-list"></i>
+                <span>view approved request</span>
+              </a>
+            </li>
+            <li>
+              <a class="nav-link collapsed" href="{{ url_for('rejected') }}">
+                <i class="bi bi-card-list"></i>
+                <span>View rejected request</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item">
           <a class="nav-link collapsed" href="{{ url_for('comment') }}">
             <i class="bi bi-question-circle"></i>
             <span>View Comments</span>
