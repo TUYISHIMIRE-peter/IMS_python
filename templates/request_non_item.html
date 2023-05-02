@@ -6,8 +6,8 @@
         <div class="col-lg-6 my-5">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Update Non Consumable Item</h5>
-            <form action="{{ url_for('update_item_non_consumable') }}" method="POST">
+            <h5 class="card-title">Update Consumable Item</h5>
+            <form action="{{ url_for('update_item') }}" method="POST">
                 <div class="row mb-3">
                     <div class="col-sm-9">
                       <input type="text" hidden value="{{ item.item_id }}" class="form-control" name="item_id">
@@ -20,34 +20,15 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="inputname" class="col-sm-3 col-form-label">item code</label>
+                    <label for="inputname" class="col-sm-3 col-form-label">Item quantity</label>
                     <div class="col-sm-9">
-                      <input type="text" value="{{ item.item_code }}" required class="form-control" name="item_code">
+                      <input type="text" value="{{ item.item_quantity }}" required class="form-control" name="item_quantity">
                     </div>
                   </div>
-                  <div class="row mb-3">
-                    <label for="inputname" class="col-sm-3 col-form-label">item Serial Number</label>
-                    <div class="col-sm-9">
-                      <input type="text" value="{{ item.item_serial_number }}" required class="form-control" name="item_serial_number">
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label for="inputname" class="col-sm-3 col-form-label">Availablity</label>
-                    <div class="col-sm-9">
-                      <input type="text" value="{{ item.availablity }}" required class="form-control" name="availablity">
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label for="inputname" class="col-sm-3 col-form-label">borrowed to</label>
-                    <div class="col-sm-9">
-                      <input type="text" placeholder="Enter borrower Name" required class="form-control" name="borrowed_to">
-                    </div>
-                  </div>
-                  
                 <div class="row mb-3">
                   <label class="col-sm-3 col-form-label">category</label>
                   <div class="col-sm-9">
-                    <select class="form-select" value="{{ item.item_category }}" required  name="category">
+                    <select class="form-select" value="{{ item.item_category }}" required name="category">
                       <option selected value="{{ item.item_category }}">{{ item.item_category }}</option>
                       <option value="consumables">consumables</option>
                       <option value="non-consumables">non-consumables</option>
@@ -55,22 +36,10 @@
                   </div>
                 </div>
                 <div class="row mb-3">
-                  <label class="col-sm-3 col-form-label" >status</label>
-                  <div class="col-sm-9">
-                    <select class="form-select" name="status" required aria-label="Default select example">
-                      <option selected value="{{ item.item_status }}">{{ item.item_status }}</option>
-                      <option value="functioning well">Good</option>
-                      <option value="work but has some defects">Fair</option>
-                      <option value="not in services but can be maintaned">to be repaired</option>
-                      <option value="beyond repair and needs disposal">damaged</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="row mb-3">
                   <label class="col-sm-3 col-form-label">Location</label>
                   <div class="col-sm-9">
                     <select class="form-select"  name="location" required aria-label="Default select example">
-                      <option selected value="{{ item.item_location }}">{{ item.item_location }}</option>
+                      <option selected value="{{ item.item_location }}" >{{ item.item_location }}</option>
                       <option value="Lab1">Lab 1</option>
                       <option value="Lab2">Lab 2</option>
                       <option value="Lab3">Lab 3</option>

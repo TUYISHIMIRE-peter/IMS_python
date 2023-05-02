@@ -9,7 +9,7 @@ UPLOAD_FOLDER = 'static/uploads/'
 app = Flask(__name__)
 
 app.secret_key = 'shardaq'
-app.config['PERMANENT_SESSION_LIFETIME']= timedelta(minutes=20)
+app.config['PERMANENT_SESSION_LIFETIME']= timedelta(minutes=30)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # database connection details below
 app.config['MYSQL_HOST'] = 'localhost'
@@ -310,11 +310,12 @@ def request_item():
             user_i = request.form['id']
             user_id = int(user_i)
             phone = request.form['phone']
+            purpose=request.form['purpose']
             item = request.form['item']
             Quantity = request.form['Quantity']
             cursor = mysql.connection.cursor()
-            data = cursor.execute("""INSERT INTO `request`(`user_id`, `phone`, `item_name`, `item_quantity`)
-            VALUES (%s,%s,%s,%s)""",(user_id,phone,item,Quantity))  
+            data = cursor.execute("""INSERT INTO `request`(`user_id`, `phone`, `item_name`, `item_quantity`,`purpose`)
+            VALUES (%s,%s,%s,%s,%s)""",(user_id,phone,item,Quantity,purpose))  
             mysql.connection.commit()      
             return redirect(url_for('home'))
 #------------------------------------------------------------------------------------  
@@ -389,6 +390,8 @@ def update_item_non_consumable():
             status = request.form['status']
             category = request.form['category']
             location = request.form['location']
+            borrowed_to=request.form['borrowed_to']
+            availablity = request.form['availablity']
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute("""
                 UPDATE `items` SET 
@@ -397,9 +400,11 @@ def update_item_non_consumable():
                 `item_serial_number`=%s,
                 `item_category`=%s,
                 `item_status`=%s,
-                `item_location`=%s
+                `availablity`=%s,
+                `item_location`=%s,
+                `borrowed_to`=%s
                 WHERE `item_id`=%s
-                """, (name, item_code,item_serial_number,category,status, location,id_data))
+                """, (name, item_code,item_serial_number,category,status,availablity, location,borrowed_to,id_data))
             mysql.connection.commit()
             return redirect(url_for('home'))
 #----------------------------------------------------------------------------------
@@ -438,9 +443,6 @@ def update_user_info():
             password1 = request.form['password']
             password = generate_password_hash(password1)
             job_position = request.form['job_position']
-            file = request.files['image']
-            filename = file.filename
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute("""
                 UPDATE `users` SET 
@@ -448,10 +450,9 @@ def update_user_info():
                 `last_name`=%s,
                 `email`=%s,
                 `password`=%s,
-                `job_position`=%s,
-                `profile_img`=%s
+                `job_position`=%s
                 WHERE `id`=%s
-             """, (fname,lname,email,password,job_position,filename,id))
+             """, (fname,lname,email,password,job_position,id))
             mysql.connection.commit()
             return redirect(url_for('home'))
 #----------------------------------------------------------------------------------
@@ -484,23 +485,23 @@ def update_your_info():
             mysql.connection.commit()
             return redirect(url_for('home'))     
 #---------------------------------------------------------------------------------
-@app.route('/update_request_status_to_approved/<id>')
+@app.route('/update_request_status_to_approved/<int:id>')
 def change_status_approved(id):
     if len(session)==0:
         return render_template('index.html',error='you must login first')
     else:
         cursor = mysql.connection.cursor()
-        cursor.execute("""UPDATE `request` SET `status`='approved',`message`="your request have been approved, you should come to our office to take what you requested!" WHERE `id`=%s""", (id))  
+        cursor.execute("""UPDATE `request` SET `status`='approved',`message`='your request have been approved, you should come to our office to take what you requested!' WHERE `id`=%s""", (id,))  
         mysql.connection.commit()
         return redirect(url_for('home'))
 #---------------------------------------------------------------------------------
-@app.route('/update_request_to_rejected/<id>')
+@app.route('/update_request_to_rejected/<int:id>')
 def update_request_to_rejected(id):
     if len(session)==0:
         return render_template('index.html',error='you must login first')
     else:
-        cursor = mysql.connection.cursor()
-        cursor.execute("""UPDATE `request` SET `status`='rejected', `message`="your request is reject due to unavailablity of item you requested" WHERE `id`=%s""", (id))  
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("""UPDATE `request` SET `status`='rejected', `message`='your request is reject due to unavailablity of item you requested' WHERE `id`=%s""", (id,))  
         mysql.connection.commit()
         return redirect(url_for('home'))
 #------------------------------------------------------------------------------------
@@ -512,7 +513,7 @@ def pending():
         if session['position']=='Admin':
             cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
             cursor.execute("""SELECT request.id,request.status,request.user_id,request.phone,
-            request.item_name,request.item_quantity,users.first_name,
+            request.item_name,request.item_quantity,request.purpose,users.first_name,
             users.last_name, users.email FROM request  
             INNER JOIN users ON request.user_id = users.id  
             WHERE `status`='Pending'""")
@@ -582,8 +583,9 @@ def update_user_pass():
             else:
                 flash('Current password is incorrect', 'error')
                 return redirect(url_for('profile'))
-        return render_template('/update_user_password.html')
+        return render_template('/users-profile.html')
 #------------------------------------------------------------------------------------
 
+#-------------------------------------------------------------------------------------
 if __name__ == '__main__':
     app.run(debug=True)
