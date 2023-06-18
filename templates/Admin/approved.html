@@ -28,6 +28,7 @@
                         <th scope="col">Phone Number</th>
                         <th scope="col">Items</th>
                         <th scope="col">quantity</th>
+                        <th scope="col">purpose</th>
                         <th scope="col" colspan="2" class="text-center">Action</th>
                       </tr>
                     </thead>
@@ -41,6 +42,7 @@
                         <td>{{ request.phone }}</td>
                         <td>{{ request.item_name }}</td>
                         <td>{{ request.item_quantity }}</td>
+                        <td>{{ request.purpose }}</td>
                         <td><a href="/update_request_status_to_approved/{{ request.id }}"><span class="badge bg-success">Approved</span></a></td>
                         <td><a href="/update_request_to_rejected/{{ request.id }}"><span class="badge bg-danger">Rejected</span></a></td>
                       </tr>

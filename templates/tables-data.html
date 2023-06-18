@@ -3,12 +3,11 @@
   <main id="main" class="main">
 
     <div class="pagetitle">
-      <h1>Data Tables</h1>
+      <h1>Non consumables Items</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item">Tables</li>
-          <li class="breadcrumb-item active">Data</li>
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Non consumables Items</li>
         </ol>
       </nav>
     </div>
@@ -22,30 +21,29 @@
               <table class="table datatable">
                <thead>
                  <tr>
-                    <th>ID</th>
-                   <th>Name</th>
-                    <th>Code</th>
-                   <th>Serial Number</th>
-                    <th>Quantity</th>
-                    <th>Category</th>
-                   <th>Status</th>
-                   <th>Location</th>
-                   <th>Date Registered</th>
-                   <th>{{name}}</th>
+                  <th>ID</th>
+                  <th>Name</th>
+                   <th>Code</th>
+                  <th>Serial Number</th>
+                   <th>Category</th>
+                  <th>Status</th>
+                  <th>Availablity</th>
+                  <th>Location</th>
+                  <th>Date Registered</th>
                  </tr>
                </thead>
                 <tbody>
                 {% for item in data %}
                 <tr>
                    <td>{{ loop.index }}</td>
-                    <td>{{ item.item_name }}</td>
-                    <td>{{ item.item_code }}</td>
-                    <td>{{ item.item_serial_number }}</td>
-                   <td>{{ item.item_quantity }}</td>
-                    <td>{{ item.item_category }}</td>
-                    <td>{{ item.item_status }}</td>
-                    <td>{{ item.item_location }}</td>
-                  <td>{{ item.date_registered }}</td>
+                   <td>{{ item.item_name }}</td>
+                   <td>{{ item.item_code }}</td>
+                   <td>{{ item.item_serial_number }}</td>
+                   <td>{{ item.item_category }}</td>
+                   <td>{{ item.item_status }}</td>
+                   <td>{{ item.availablity }}</td>
+                   <td>{{ item.item_location }}</td>
+                 <td>{{ item.date_registered }}</td>
                  </tr>
                   {% endfor %}
                 </tbody>
